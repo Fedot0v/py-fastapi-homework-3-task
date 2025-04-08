@@ -97,7 +97,6 @@ class PasswordResetService:
         return {"message": "If you are registered, "
                            "you will receive an email with instructions."}
 
-
     async def validate_reset_token(self, email: str, token: str) -> UserModel:
         user = await self.user_crud.get_user_by_email(email)
         if not user or not user.is_active:
