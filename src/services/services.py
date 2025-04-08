@@ -92,6 +92,8 @@ class PasswordResetService:
             user.password_reset_token = new_token
 
         await self.db.commit()
+        # TODO: Implement email sending logic here (e.g., send reset link with new_token.token)
+
         return {"message": "If you are registered, "
                            "you will receive an email with instructions."}
 
