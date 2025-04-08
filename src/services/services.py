@@ -95,12 +95,13 @@ class PasswordResetService:
         return {"message": "If you are registered, "
                            "you will receive an email with instructions."}
 
+
     async def validate_reset_token(self, email: str, token: str) -> UserModel:
         user = await self.user_crud.get_user_by_email(email)
         if not user or not user.is_active:
-            token_list = await (self.password_reset_token_crud.
-                                get_token(user.id)
-                                ) if user else []
+            token_list = await (
+                self.password_reset_token_crud.get_token(user.id)
+            ) if user else []
             if token_list:
                 await (self.password_reset_token_crud.
                        delete_tokens(token_list)
@@ -155,6 +156,8 @@ class PasswordResetService:
                 )
 
             await self.db.commit()
+            # TODO: Implement email sending logic here (e.g., send reset link with reset_token.token)
+
             return {"message": "Password reset successfully."}
         except HTTPException as e:
             await self.db.rollback()
