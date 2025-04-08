@@ -43,7 +43,6 @@ class UserCRUD:
         await self.db.refresh(user)
         return user
 
-
     async def get_user_by_email(self, email: str) -> UserModel | None:
         stmt = select(UserModel).where(UserModel.email == email)
         stmt_result = await self.db.execute(stmt)
@@ -66,11 +65,11 @@ class UserCRUD:
                 status_code=400,
                 detail=f"Invalid password: {str(e)}"
             )
-        except Exception as e:
+        except Exception:
             await self.db.rollback()
             raise HTTPException(
                 status_code=500,
-                detail=f"An error occurred while resetting the password."
+                detail="An error occurred while resetting the password."
             )
 
 

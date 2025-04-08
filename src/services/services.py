@@ -62,9 +62,11 @@ class ActivationTokenService:
             self,
             activation_request: UserActivationRequestSchema
     ):
-        user = await (self.activation_token_crud.
-                      validate_and_activate_user(activation_request.token)
-                      )
+        await (
+            self.activation_token_crud.validate_and_activate_user(
+                activation_request.token
+            )
+        )
         return {"message": "User account activated successfully."}
 
 
